@@ -136,16 +136,16 @@ void SolisS5Component::loop() {
   
   if (loopwait > SOLIS_S5_LOOP_WAIT) { // some time has passed without receiving another character. this should be the end of a message.
     ESP_LOGV(TAG, "message recieved len=%d", index);
-    if ((buffer[0] == 1)) && (buffer[1] == 4)) { // message starts with the right preamble
-      if ((buffer[2] == 11)) && (buffer[3] == 183) && (buffer[4] == 0)) && (buffer[5] == 28)){
+    if ((buffer[0] == 1) && (buffer[1] == 4)) { // message starts with the right preamble
+      if ((buffer[2] == 11) && (buffer[3] == 183) && (buffer[4] == 0)) && (buffer[5] == 28)){
 	Decoderselect = 1;
 	ESP_LOGD(TAG, "Stick request 1 received");
       }	
-      if ((buffer[2] == 11)) && (buffer[3] == 208) && (buffer[4] == 0)) && (buffer[5] == 26)){
+      if ((buffer[2] == 11) && (buffer[3] == 208) && (buffer[4] == 0)) && (buffer[5] == 26)){
 	Decoderselect = 1;
 	ESP_LOGD(TAG, "Stick request 2 received");
       }	
-      if ((buffer[2] == 11)) && (buffer[3] == 234) && (buffer[4] == 0)) && (buffer[5] == 28)){
+      if ((buffer[2] == 11) && (buffer[3] == 234) && (buffer[4] == 0)) && (buffer[5] == 28)){
 	Decoderselect = 1;
 	ESP_LOGD(TAG, "Stick request 4 received");
       }	
