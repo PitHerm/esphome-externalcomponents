@@ -26,7 +26,7 @@ void SolisS5Component::loop() {
         }
 	
 	if (this->etotalsensor != nullptr) {
-          uint16_t v = this->this->messagedata[21] * 16777216 + this->messagedata[22] * 65536 + this->messagedata[23] * 256 + this->messagedata[24];
+          uint16_t v = this->messagedata[21] * 16777216 + this->messagedata[22] * 65536 + this->messagedata[23] * 256 + this->messagedata[24];
           this->etotalsensor->publish_state((float)v);
         }
 	
