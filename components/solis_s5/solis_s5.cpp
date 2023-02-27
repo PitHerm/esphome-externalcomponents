@@ -25,53 +25,52 @@ void SolisS5Component::loop() {
           this->pactotalsensor->publish_state((float)v);
         }
 	
-	      if (this->etotalsensor != nullptr) {
+	if (this->etotalsensor != nullptr) {
           uint16_t v = this->this->messagedata[21] * 16777216 + this->messagedata[22] * 65536 + this->messagedata[23] * 256 + this->messagedata[24];
           this->etotalsensor->publish_state((float)v);
         }
 	
-	      if (this->emonthsensor != nullptr) {
+	if (this->emonthsensor != nullptr) {
           uint16_t v = this->messagedata[25] * 256 + this->messagedata[27];
           this->emonthsensor->publish_state((float)v);
         }
 
-	      if (this->edaysensor != nullptr) {
+	if (this->edaysensor != nullptr) {
           uint16_t v = this->messagedata[33] * 256 + this->messagedata[38];
           this->edaysensor->publish_state((float)v*0.1f);
         }
 
-	      if (this->vdc1sensor != nullptr) {
+	if (this->vdc1sensor != nullptr) {
           uint16_t v = this->messagedata[47] * 256 + this->messagedata[48];
           this->vdc1sensor->publish_state((float)v * 0.1f);
         }
 
-	      if (this->idc1sensor != nullptr) {
+	if (this->idc1sensor != nullptr) {
           uint16_t v = this->messagedata[49] * 256 + this->messagedata[50];
           this->idc1sensor->publish_state((float)v * 0.1f);
         }
 	
-	      if (this->vdc2sensor != nullptr) {
+	if (this->vdc2sensor != nullptr) {
           uint16_t v = this->messagedata[51] * 256 + this->messagedata[52];
           this->vdc2sensor->publish_state((float)v * 0.1f);
         }
 
-	      if (this->idc2sensor != nullptr) {
+	if (this->idc2sensor != nullptr) {
           uint16_t v = this->messagedata[53] * 256 + this->messagedata[54];
           this->idc2sensor->publish_state((float)v * 0.1f);
         }
 	
-	      if (this->pdc1sensor != nullptr) {
+	if (this->pdc1sensor != nullptr) {
           uint16_t v1 = this->messagedata[47] * 256 + this->messagedata[48];
           uint16_t i1 = this->messagedata[49] * 256 + this->messagedata[50];
           this->pdc1sensor->publish_state((float)v1 * (float)i1 * 0.01f);
         }
 
-	      if (this->pdc2sensor != nullptr) {
+	if (this->pdc2sensor != nullptr) {
           uint16_t v2 = this->messagedata[51] * 256 + this->messagedata[52];
           uint16_t i2 = this->messagedata[53] * 256 + this->messagedata[54];
           this->pdc2sensor->publish_state((float)v2 * (float)i2 * 0.01f);
         }
-
         break;
 
       case 2:
@@ -80,27 +79,27 @@ void SolisS5Component::loop() {
           this->vacusensor->publish_state((float)v * 0.1f);
         }
 
-	      if (this->vacvsensor != nullptr) {
+	if (this->vacvsensor != nullptr) {
           uint16_t v = this->messagedata[23] * 256 + this->messagedata[24];
           this->vacvsensor->publish_state((float)v * 0.1f);
 	      }
 
-	      if (this->vacwsensor != nullptr) {
+	if (this->vacwsensor != nullptr) {
           uint16_t v = this->messagedata[25] * 256 + this->messagedata[26];
           this->vacwsensor->publish_state((float)v * 0.1f);
         }
 
-	      if (this->iacusensor != nullptr) {
+	if (this->iacusensor != nullptr) {
           uint16_t v = this->messagedata[27] * 256 + this->messagedata[28];
           this->iacusensor->publish_state((float)v * 0.1f);
         }
 
-	      if (this->iacvsensor != nullptr) {
+	if (this->iacvsensor != nullptr) {
           uint16_t v = this->messagedata[29] * 256 + this->messagedata[30];
           this->iacvsensor->publish_state((float)v * 0.1f);
         }
 
-	      if (this->iacwsensor != nullptr) {
+	if (this->iacwsensor != nullptr) {
           uint16_t v = this->messagedata[31] + 256 + this->messagedata[32];
           this->iacwsensor->publish_state((float)v * 0.1f);
         }
@@ -109,14 +108,13 @@ void SolisS5Component::loop() {
           uint16_t v = this->messagedata[37] * 256 + this->messagedata[38];
           this->tigbtsensor->publish_state((float)v*0.1f);
         }
-
-	      break;
+	break;
       case 4:
-	      if (this->vaactotalsensor != nullptr) {
+	if (this->vaactotalsensor != nullptr) {
           uint16_t v = this->messagedata[17] * 16777216 + this->messagedata[18] * 65536 + this->messagedata[19] * 256 + this->messagedata[20];
           this->vaactotalsensor->publish_state((float)v);
         }
-	      break;
+	break;
 
     }
     this->sensorupdateprogress--;
@@ -140,16 +138,16 @@ void SolisS5Component::loop() {
     ESP_LOGV(TAG, "message recieved len=%d", index);
     if ((buffer[0] == 1)) && (buffer[1] == 2)) { // message starts with the right preamble
       if ((buffer[2] == 11)) && (buffer[3] == 183) && (buffer[4] == 0)) && (buffer[5] == 28)){
-	      Decoderselect = 1;
-	      ESP_LOGD(TAG, "Stick request 1 received");
+	Decoderselect = 1;
+	ESP_LOGD(TAG, "Stick request 1 received");
       }	
       if ((buffer[2] == 11)) && (buffer[3] == 208) && (buffer[4] == 0)) && (buffer[5] == 26)){
-	      Decoderselect = 1;
-	      ESP_LOGD(TAG, "Stick request 2 received");
+	Decoderselect = 1;
+	ESP_LOGD(TAG, "Stick request 2 received");
       }	
       if ((buffer[2] == 11)) && (buffer[3] == 234) && (buffer[4] == 0)) && (buffer[5] == 28)){
-	      Decoderselect = 1;
-	      ESP_LOGD(TAG, "Stick request 4 received");
+	Decoderselect = 1;
+	ESP_LOGD(TAG, "Stick request 4 received");
       }	
       
       uint8_t msglen = buffer[3];
