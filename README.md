@@ -1,4 +1,4 @@
-# esphome-externalcomponents
+# This is a HomeAssistant integration for Solis inverters described below using ESPHome
 A friend of mine asked me for a solution to get data out of his solis system
 because he didn't find any working solution for his system on the net.
 
