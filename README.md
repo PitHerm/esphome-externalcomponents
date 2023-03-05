@@ -35,5 +35,10 @@ I took GPIO4 for RX instead of pin 3 because a lot of the avaiable D1-mini vesio
 not able to receive data on the default Rx-pin bacause of the circuit around - and 
 behavior of the CH340 itself.
 
+You will find all documentation you nee within the Docs folder including
+a sample config yaml file.
+
+within the Tests folder some tests are avaiable
+
 You can try if this solution works for you,
 what i can say is that it works stabil for the mentioned system.
