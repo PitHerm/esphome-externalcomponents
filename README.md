@@ -17,7 +17,7 @@ But this solution didn't work, digging a bit deeper i spottet that the
 communications is completely different.
 
 Depending on that i'm completely new to ESPhome and not good with python and C++
-(i prefer old C) , took Grob6000's code as a base and applied several changes
+(i prefer old C) , i took Grob6000's code as a base and applied several changes
 to meet the different protocol and got a solution that works for my friend.
 
 IMPORTANT: The inverter MUST be configured as the first on the stick (as the manual
