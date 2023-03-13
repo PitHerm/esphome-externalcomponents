@@ -22,11 +22,15 @@ to meet the different protocol and got a solution that works for my friend.
 
 IMPORTANT: The inverter MUST be configured with (Modbus) address set to 1 !
 
-# s5_gr3p15kww3
-
-A sniffing component dokumentation: Docs/s5_gr3p15kww3 
-tests Tests/s5_gr3p15kww3
-
-
 You can try if my solutions work for you,
 it works stabil for the above mentioned system.
+
+
+
+# s5_gr3p15kww3
+
+A sniffing component
+
+dokumentation: Docs/s5_gr3p15kww3
+
+tests: Tests/s5_gr3p15kww3
