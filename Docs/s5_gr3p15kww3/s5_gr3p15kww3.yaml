@@ -1,0 +1,105 @@
+esphome:
+  name: s5_gr3p15kww3
+  friendly_name: s5_gr3p15kww3
+
+external_components:
+  source:
+    type: git
+    url: https://github.com/PitHerm/esphome-externalcomponents
+    
+ 
+
+esp8266:
+  board: esp01_1m
+
+# Enable logging
+logger:
+  baud_rate: 0
+
+web_server:
+  port: 80
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "BWj0PSapzg/ZziPKEviI989hQUT4vzTB4cO7ANK6JI8="
+
+ota:
+  password: "403a8940e1787f9c869c305d3c13e26e"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Gr3P15K Fallback Hotspot"
+    password: "BuurMtAMOThr"
+
+captive_portal:
+
+sensor:
+  - platform: uptime
+    name: Solis Inverter ESPHome Uptime
+    update_interval: 60s
+  - platform: wifi_signal
+    name: Solis Inverter ESPHome Wifi Signal
+    update_interval: 60s
+    
+uart:
+  id: uart_bus
+  tx_pin: GPIO5
+  rx_pin: GPIO4
+  rx_buffer_size: 4096
+  baud_rate: 9600
+  debug:
+    direction: BOTH
+    dummy_receiver: false
+    after:
+      delimiter: "\n"
+    sequence:
+      - lambda: UARTDebug::log_string(direction, bytes);
+
+s5_gr3p15kww3:
+  id: solisinverter
+  uart_id: uart_bus
+  update_interval: 60s
+  voltage_dc_1:
+    name: "Solis Inverter DC Voltage 1"
+  voltage_dc_2:
+    name: "Solis Inverter DC Voltage 2"
+  voltage_ac_u:
+    name: "Solis Inverter AC Voltage U"
+  voltage_ac_v:
+    name: "Solis Inverter AC Voltage V"
+  voltage_ac_w:
+    name: "Solis Inverter AC Voltage W"
+  current_dc_1:
+    name: "Solis Inverter DC Current 1"
+  current_dc_2:
+    name: "Solis Inverter DC Current 2"
+  current_ac_u:
+    name: "Solis Inverter AC Current U"
+  current_ac_v:
+    name: "Solis Inverter AC Current V"
+  current_ac_w:
+    name: "Solis Inverter AC Current W"
+  power_dc_1:
+    name: "Solis Inverter DC Power 1"
+  power_dc_2:
+    name: "Solis Inverter DC Power 2"
+  power_ac_total:
+    name: "Solis Inverter AC Power Total"
+  va_ac_total:
+    name: "Solis Inverter AC VA Total"
+  powerfactor_ac:
+    name: "Solis Inverter AC Power Factor"
+  energy_today:
+    name: "Solis Inverter Energy Today"
+  energy_thismonth:
+    name: "Solis Inverter Energy This Month"
+  energy_total:
+    name: "Solis Inverter Energy Total"
+  temperature_inv:
+    name: "Solis Inverter Temperature"
+    
