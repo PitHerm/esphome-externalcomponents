@@ -20,25 +20,13 @@ Depending on that i'm completely new to ESPhome and not good with python and C++
 (i prefer old C) , i took Grob6000's code as a base and applied several changes
 to meet the different protocol and got a solution that works for my friend.
 
-IMPORTANT: The inverter MUST be configured as the first on the stick (as the manual
-of the stick says).
+IMPORTANT: The inverter MUST be configured with (Modbus) address set to 1 !
 
-The fortune to sniff the communication is that the inverter is still connected to
-the cloud.
+# s5_gr3p15kww3
 
-On the other hand you receive new values around every 5 minutes because the stick
-does not request new values more often.
-I think getting data more often is not really neccessary, however, maybe i'll
-write another version requesting data more often and working without a stick sometimes.
+A sniffing component dokumentation: Docs/s5_gr3p15kww3 
+tests Tests/s5_gr3p15kww3
 
-I took GPIO4 for RX instead of pin 3 because a lot of the avaiable D1-mini vesions are
-not able to receive data on the default Rx-pin bacause of the circuit around - and 
-behavior of the CH340 itself.
 
-You will find all documentation you need within the Docs folder including
-a sample config yaml file.
-
-Within the Tests folder you will find some tests for checking.
-
-You can try if this solution works for you,
+You can try if my solutions work for you,
 it works stabil for the above mentioned system.
