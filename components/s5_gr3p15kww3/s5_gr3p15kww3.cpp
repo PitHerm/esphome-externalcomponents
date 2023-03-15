@@ -1,3 +1,4 @@
+//V3
 #include "esphome/core/component.h"
 #include "esphome/components/sensor/sensor.h"
 #include "esphome/components/uart/uart.h"
@@ -18,6 +19,15 @@ uint8_t reader = 0;
 uint32_t pactotaldDummy;
 uint32_t vaactotalDummy;
 double Waitdummy = 0;
+uint32_t pactotalsensorSave = 1;
+uint16_t vacusensorSave = 1;
+uint16_t vacvsensorSave = 1;
+uint16_t vacwsensorSave = 1;
+uint16_t iacusensorSave = 1;
+uint16_t iacvsensorSave = 1;
+uint16_t iacwsensorSave = 1;
+uint16_t tinvsensorSave = 1;
+uint32_t vaactotalsensorSave = 1;
 
 char buffer[SOLIS_S5_SERIAL_BUFFER_LEN] = {0};
 uint8_t counter;
@@ -37,13 +47,13 @@ void s5_gr3p15kww3Component::loop() {
       case 1:
         if (this->pactotalsensor != nullptr) {
           uint32_t v = this->messagedata[13] * 16777216 + this->messagedata[14] * 65536 + this->messagedata[15] * 256 + this->messagedata[16];
-          pactotaldDummy = this->messagedata[13] * 16777216 + this->messagedata[14] * 65536 + this->messagedata[15] * 256 + this->messagedata[16];
-	  if (v > 30000){ 
-              v = 1;
+          if (v > 40000){
+              v = pactotalsensorSave;
           }
-          if (pactotaldDummy > 30000){
-              pactotaldDummy = 1;
-          }	
+          else{
+              pactotalsensorSave = v;
+          }
+          pactotalDummy = v;
           this->pactotalsensor->publish_state((float)v);
         }
 	
@@ -52,7 +62,7 @@ void s5_gr3p15kww3Component::loop() {
           this->etotalsensor->publish_state((float)v);
         }
 	
-	    if (this->emonthsensor != nullptr) {
+	if (this->emonthsensor != nullptr) {
           uint32_t v = this->messagedata[25] * 16777216 + this->messagedata[26] * 65536 + this->messagedata[27] * 256 + this->messagedata[28];
           this->emonthsensor->publish_state((float)v);
         }
@@ -107,23 +117,44 @@ void s5_gr3p15kww3Component::loop() {
       case 2:
         if (this->vacusensor != nullptr) {
           uint16_t v = this->messagedata[21] * 256 + this->messagedata[22];
+	  if(v >4000){
+              v = vacusensorSave;
+          }
+          else{
+              vacusensorSave = v;
+          }
           this->vacusensor->publish_state((float)v * 0.1f);
         }
 
         if (this->vacvsensor != nullptr) {
           uint16_t v = this->messagedata[23] * 256 + this->messagedata[24];
+	  if(v >4000){
+              v = vacvsensorSave;
+          }
+          else{
+              vacvsensorSave = v;
+          }
           this->vacvsensor->publish_state((float)v * 0.1f);
 	}
 
 	if (this->vacwsensor != nullptr) {
           uint16_t v = this->messagedata[25] * 256 + this->messagedata[26];
+	  if(v >4000){
+              v = vacwsensorSave;
+          }
+          else{
+              vacwsensorSave = v;
+          }
           this->vacwsensor->publish_state((float)v * 0.1f);
         }
 
 	if (this->iacusensor != nullptr) {
           uint16_t v = this->messagedata[27] * 256 + this->messagedata[28];
 	  if(v >1000){
-            v = 1;
+            v = iacusensorSave;
+          }
+          else{
+            iacusensorSave = v;
           }
           this->iacusensor->publish_state((float)v * 0.1f);
         }
@@ -131,15 +162,21 @@ void s5_gr3p15kww3Component::loop() {
 	if (this->iacvsensor != nullptr) {
           uint16_t v = this->messagedata[29] * 256 + this->messagedata[30];
 	  if(v >1000){
-              v = 1;
-          }	
+            v = iacvsensorSave;
+          }
+          else{
+            iacvsensorSave = v;
+          }
           this->iacvsensor->publish_state((float)v * 0.1f);
         }
 
 	if (this->iacwsensor != nullptr) {
           uint16_t v = this->messagedata[31] * 256 + this->messagedata[32];
 	  if(v >1000){
-              v = 1;
+            v = iacwsensorSave;
+          }
+          else{
+            iacwsensorSave = v;
           }
           this->iacwsensor->publish_state((float)v * 0.1f);
         }
@@ -147,7 +184,10 @@ void s5_gr3p15kww3Component::loop() {
         if (this->tinvsensor != nullptr) {
           uint16_t v = this->messagedata[37] * 256 + this->messagedata[38];
 	  if(v > 2000){
-              v = 1;
+            v = tinvsensorSave;
+          }
+          else{
+            tinvsensorSave = v;
           }
           this->tinvsensor->publish_state((float)v*0.1f);
         }
@@ -164,8 +204,14 @@ void s5_gr3p15kww3Component::loop() {
       case 4:
         if (this->vaactotalsensor != nullptr) {
           uint32_t v = this->messagedata[17] * 16777216 + this->messagedata[18] * 65536 + this->messagedata[19] * 256 + this->messagedata[20];
-          vaactotalDummy = this->messagedata[17] * 16777216 + this->messagedata[18] * 65536 + this->messagedata[19] * 256 + this->messagedata[20];
-          this->vaactotalsensor->publish_state((float)v);
+          if (v > 40000){
+            v = vaactotalsensorSave;
+          }
+          else{
+            vaactotalsensorSave = v;
+          }
+          vaactotalDummy = v;
+	  this->vaactotalsensor->publish_state((float)v);
         }
         Decodeddone = Decodeddone + 1;
         sensorupdateprogres = 0;
@@ -185,13 +231,13 @@ void s5_gr3p15kww3Component::loop() {
 
   if (Decodeddone == 3) {
       Decodeddone = 0;
-      if ((vaactotalDummy / pactotaldDummy) > 1.0){
-          float dummy = 1.0;
-          this->pfacsensor->publish_state((float)dummy);
-      }
-      else if ((vaactotalDummy / pactotaldDummy) <= 1.0) {
-          this->pfacsensor->publish_state((float)vaactotalDummy / pactotaldDummy);
-      }
+     if ((pactotalDummy / vaactotalDummy) > 1.0){
+       float dummy = 1.0;
+       this->pfacsensor->publish_state((float)dummy);
+     }
+     else if ((pactotalDummy / vaactotalDummy) <= 1.0) {
+        this->pfacsensor->publish_state((float)pactotalDummy / vaactotalDummy);
+     }
   }
 
 
